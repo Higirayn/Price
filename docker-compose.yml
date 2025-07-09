@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: price-service-db
+    environment:
+      POSTGRES_DB: price_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - price-service-network
+
+  # Приложение Price Service
+#  price-service:
+#    build: .
+#    container_name: price-service-app
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      DB_HOST: postgres
+#      DB_PORT: 5432
+#      DB_NAME: price_service
+#      DB_USER: postgres
+#      DB_PASSWORD: password
+#    depends_on:
+#      - postgres
+#    volumes:
+#      - ./logs:/app/logs
+#    networks:
+#      - price-service-network
+#    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  price-service-network:
+    driver: bridge 
